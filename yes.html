@@ -1,1 +1,419 @@
-Hello
+<div class="no-overflow" id="yui_3_17_2_1_1698519549077_32"><div id="board">
+  <div class="square square-black"><div class="piece piece-black"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-black"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-black"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-black"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-black"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-black"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-black"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-black"></div></div>
+  <div class="square square-black"><div class="piece piece-black"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-black"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-black"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-black"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"></div>
+  <div class="square square-black"></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="possible-move"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-white"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-white"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-white"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-white"></div></div>
+  <div class="square square-black"><div class="piece piece-white"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-white"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-white"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-white"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-white"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-white"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-white"></div></div>
+  <div class="square square-white"></div>
+  <div class="square square-black"><div class="piece piece-white"></div></div>
+</div>
+  <style>
+    :root{
+  --black-square-col:rgb(104, 79, 68);
+  --white-square-col:rgb(245, 239, 217);
+  --black-piece-col:black;
+  --white-piece-col:white;
+  --abstract-unit:calc(1vh);
+}
+
+#board{
+  margin:auto;
+  border:2px solid black;
+  width:80vh;
+  height:80vh;
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+}
+
+.square{
+  width:10vh;
+  height:10vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.square-black{
+  background:var(--black-square-col);
+}
+
+.square-white{
+  background:var(--white-square-col);
+}
+
+.piece{
+  width:8vh;
+  height:8vh;
+  border:0.5vh solid;
+  border-radius:5vh;
+}
+
+.piece-black{
+  background:var(--black-piece-col);
+  border-color: var(--white-piece-col);
+  color: var(--white-piece-col);
+}
+
+.piece-white{
+  background:var(--white-piece-col);
+  border-color: var(--black-piece-col);
+  color: var(--black-piece-col);
+}
+
+.piece-king::after{
+  content:"꙳";
+  font-size:25vh;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.possible-move{
+  width:5vh;
+  height:5vh;
+  background:lightgreen;
+  border-radius:5vh;
+}
+
+.possible-capture{
+  width:5vh;
+  height:5vh;
+  background:red;
+  border-radius:5vh;
+}
+
+.possible-later-capture{
+  width:5vh;
+  height:5vh;
+  background:lightcoral;
+  border-radius:5vh;
+}
+</style>
+  <script>
+    var board = [2,0,2,0,2,0,2,0,0,2,0,2,0,2,0,2,2,0,2,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1];
+
+    squares = document.getElementsByClassName("square");
+
+    const EMPTY = 0;
+    const WHITE = 1;
+    const BLACK = 2;
+    const WHITEKING = 3;
+    const BLACKKING = 4;
+    const POSSIBILITY = 5;
+    const CAPTURE = 6;
+    const LATERCAPTURE = 7;
+
+    const UP = true;
+    const DOWN = false;
+
+    var currentPlayer = 1;
+
+    var firstMove = true; //tracks whether in a combo capture
+
+    function getDirection(piece){
+      return (board[piece] == 1) || (board[piece] == 3);
+    }
+
+    function nextTurn(movedPiece = null){
+      clearPossibilities();
+      drawBoard();
+      currentPlayer = (currentPlayer+1)%2;
+      if (movedPiece != null){
+        if (findPossibleCaptures(movedPiece).length > 0){
+          currentPlayer = (currentPlayer+1)%2;
+          firstMove = false;
+          pieceClicked(movedPiece);
+        }
+      }
+    }
+
+    function isKing(piece){
+      return (board[piece] == WHITEKING) || (board[piece] == BLACKKING);
+    }
+
+    function onEdge(piece){
+      //console.log(getDirection(piece) == UP);
+      if (getDirection(piece) == UP){
+        return ((piece < 8) ? 1 : 0);
+      }else{
+        return ((piece > 55) ? 1 : 0);
+      }
+    }
+
+    for (let i = 0; i<squares.length; i++){
+      squares[i].index = i;
+    }
+
+    function drawBoard(){
+      ////console.log(board);
+      for (var i=0; i<board.length; i++){
+        let empty = false;
+        let king = false;
+        let color = "";
+        let whiteHTML = '<div class="piece piece-white"></div>';
+        let blackHTML = '<div class="piece piece-black"></div>';
+        let whiteKingHTML = '<div class="piece piece-white piece-king"></div>';
+        let blackKingHTML = '<div class="piece piece-black piece-king"></div>';
+        let possibleHTML = '<div class="possible-move"></div>';
+        let captureHTML = '<div class="possible-capture"></div>';
+        let laterCaptureHTML = '<div class="possible-later-capture"></div>';
+        let piece = board[i];
+        switch(piece){
+          case EMPTY:
+            squares[i].innerHTML = "";
+            empty = true;
+            break;
+          case WHITE:
+            piece = whiteHTML;
+            color = "white";
+            break;
+          case BLACK:
+            piece = blackHTML;
+            color = "black";
+            break;
+          case WHITEKING:
+            piece = whiteKingHTML;
+            color = "white";
+            king = true;
+            break;
+          case BLACKKING:
+            piece = blackKingHTML;
+            color = "black";
+            king = true;
+            break;
+          case POSSIBILITY:
+            empty = true;
+            squares[i].innerHTML = possibleHTML;
+            break;
+          case CAPTURE:
+            empty = true;
+            squares[i].innerHTML = captureHTML;
+            break;
+          case LATERCAPTURE:
+            empty = true;
+            squares[i].innerHTML = laterCaptureHTML;
+            break;
+        }
+        //console.log(squares[i]);
+        if (!empty){
+          squares[i].innerHTML = piece;
+          pieceEl = squares[i].children[0];
+          pieceEl.isKing = king;
+          pieceEl.color = color;
+          const constPieceNum = i;
+          pieceEl.onclick = function(){
+            if(firstMove){
+              pieceClicked(constPieceNum);
+            }else{
+              firstMove = true;
+              nextTurn();
+            }
+          };
+        }
+      }
+    }
+
+    drawBoard()
+
+    var lastPossibilities = [];
+
+    function findPossibleRoutes(piece){
+      var possibilities = [piece+7, piece+9, piece-7, piece-9];
+      if(!isKing(piece)){
+        if(getDirection(piece) == UP){
+          possibilities = [piece-7,piece-9];
+        }else{
+          possibilities = [piece+7, piece+9];
+        }
+      }
+
+      var final = [];
+
+      for (let i=0; i<possibilities.length; i++){
+        let possibility = possibilities[i];
+        if (board[possibility] == EMPTY && 
+            ((possibility%8-piece%8 == 1)||(possibility%8-piece%8 == -1)) // check whether move doesnt teleport across board
+           ){
+          final.push(possibility);
+        }
+      }
+
+      return final;
+    }
+
+    function findPossibleCaptures(piece, direction = null, king = null, boardArg = null, depth = 1){
+      if (direction == null){
+        direction = getDirection(piece);
+      }
+
+      if (king == null){
+        king = isKing(piece);
+      }
+
+      if (boardArg == null){
+        boardArg = board.concat([]); // pass copy rather than reference so original board doesnt change
+      }
+
+      var possibilities = [piece+7, piece+9, piece-7, piece-9];
+      if(!king){
+        if(direction == UP){
+          possibilities = [piece-7,piece-9];
+        }else{
+          possibilities = [piece+7, piece+9];
+        }
+      }
+
+      var final = [];
+
+      for (var i=0; i<possibilities.length; i++){
+        let possibility = possibilities[i];
+        let posAfterTake = possibility + (possibility-piece);
+        if ((getDirection(possibility) != (direction)) && 
+            ([WHITE,BLACK,WHITEKING,BLACKKING].includes(boardArg[possibility])) && 
+            (boardArg[posAfterTake] == EMPTY) && 
+            ((posAfterTake%8-piece%8 == 2)||(posAfterTake%8-piece%8 == -2))){
+          final.push(possibility + (possibility-piece));
+        }
+      }
+
+      if (depth == 1){
+        final.push("");
+      }
+
+      for (var i=0; i<final.length; i++){
+        let possibility = final[i];
+        let newBoard = boardArg;
+        newBoard[(possibility + piece)/2] = EMPTY;
+        final = final.concat(findPossibleCaptures(possibility,getDirection(piece),isKing(piece),newBoard,depth+1));
+      }
+
+      return final;
+    }
+
+    function clearPossibilities(){
+      for (var i = 0; i<lastPossibilities.length; i++){
+        if ((board[lastPossibilities[i]] == POSSIBILITY)||(board[lastPossibilities[i]] == CAPTURE)||(board[lastPossibilities[i]] == LATERCAPTURE)){
+          board[lastPossibilities[i]] = EMPTY;
+        }
+      };
+    }
+
+    function pieceClicked(piece){
+      if (board[piece]%2 != currentPlayer) {
+        return
+      }
+
+      clearPossibilities()
+      //////console.log(piece);
+
+      if (firstMove){
+        possibleSquares = findPossibleRoutes(piece);
+        ////console.log(possibleSquares)
+        for (var i = 0; i<possibleSquares.length; i++){
+          board[possibleSquares[i]] = POSSIBILITY;
+        }
+      }
+
+      possibleCaptures = findPossibleCaptures(piece);
+      ////console.log(possibleCaptures);
+      var laterMove = false;
+      for (var i = 0; i<possibleCaptures.length; i++){
+        let possibleCapture = possibleCaptures[i];
+        if (possibleCapture == ""){
+          laterMove = true;
+        }
+        if (laterMove){
+          board[possibleCapture] = LATERCAPTURE;
+        }else{
+          board[possibleCapture] = CAPTURE;
+        }
+      }
+
+      lastPossibilities = possibleSquares.concat(possibleCaptures);
+      //////console.log(lastPossibilities);
+
+      drawBoard();
+
+      possibleSquareEls = document.getElementsByClassName("possible-move");
+      ////console.log(possibleSquareEls);
+      for(let i=0; i<possibleSquareEls.length; i++){
+        const squareEl = possibleSquareEls[i];
+        squareEl.onclick = function(){
+          console.log(onEdge(squareEl.parentElement.index)*2);
+          board[squareEl.parentElement.index] = board[piece] + onEdge(squareEl.parentElement.index)*2;
+          board[piece] = EMPTY;
+          nextTurn();
+        }
+      }
+
+      possibleCaptureEls = document.getElementsByClassName("possible-capture");
+      ////console.log(possibleCaptureEls);
+      for(let i=0; i<possibleCaptureEls.length; i++){
+        const captureEl = possibleCaptureEls[i];
+        captureEl.onclick = function(){
+          console.log(onEdge(captureEl.parentElement.index)*2);
+          board[(captureEl.parentElement.index + piece )/2] = 0;
+          board[captureEl.parentElement.index] = board[piece] + onEdge(captureEl.parentElement.index)*2;
+          board[piece] = EMPTY;
+          nextTurn(captureEl.parentElement.index);
+        }
+      }
+    }
+  </script></div>
